@@ -89,8 +89,4 @@ export function initStoreWithModules(
   );
 }
 
-export const wtf = () => {
-  console.log("WTF");
-};
-
 export default initStore;

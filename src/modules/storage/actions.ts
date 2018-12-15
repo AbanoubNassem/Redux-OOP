@@ -3,11 +3,10 @@ import { ActionProvider } from "../../action-providers";
 import reducer from "./reducer";
 
 export enum StorageActionTypes {
-  LOAD_STORAGE = "LOAD_STORAGE",
-  CLEAR_STORAGE = "CLEAR_STORAGE",
   STORAGE_LOADED = "STORAGE_LOADED",
-  UPDATE_STORAGE = "UPDATE_STORAGE",
-  REMOVE_STORAGE = "REMOVE_STORAGE"
+  STORAGE_CLEARED = "CLEAR_STORAGE",
+  STORAGE_UPDATED = "STORAGE_UPDATED",
+  STORAGE_REMOVED = "STORAGE_REMOVED"
 }
 
 export class StorageActions extends ActionProvider
@@ -35,7 +34,7 @@ export class StorageActions extends ActionProvider
     localStorage.clear();
 
     this.dispatch({
-      type: StorageActionTypes.CLEAR_STORAGE,
+      type: StorageActionTypes.STORAGE_CLEARED,
       payload: storage
     });
 
@@ -50,7 +49,7 @@ export class StorageActions extends ActionProvider
     }
 
     return this.dispatch({
-      type: StorageActionTypes.UPDATE_STORAGE,
+      type: StorageActionTypes.STORAGE_UPDATED,
       payload: object
     });
   };
@@ -69,7 +68,7 @@ export class StorageActions extends ActionProvider
     }
 
     return this.dispatch({
-      type: StorageActionTypes.REMOVE_STORAGE,
+      type: StorageActionTypes.STORAGE_REMOVED,
       payload: deleted
     });
   };
