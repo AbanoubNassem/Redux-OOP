@@ -1,6 +1,6 @@
 {
   "name": "redux-oop",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A sample way to interact with Redux in your app.",
   "scripts": {
     "type-check": "tsc --noEmit",

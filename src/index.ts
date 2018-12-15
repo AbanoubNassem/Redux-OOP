@@ -20,8 +20,8 @@ function combineReducers<T extends IActionProviders>(providers: T): Reducer {
   for (let p in providers) {
     if (providers.hasOwnProperty(p)) {
       const provider = (providers as any)[p] as ActionProvider;
-      const reducerName = provider.constructor.name.replace("Actions", "");
-      reducers[reducerName] = provider.reducer;
+      const reducerName = p.toLowerCase();
+      reducers[reducerName] = provider.reducer();
     }
   }
 
@@ -36,7 +36,6 @@ function initActionProviders<T extends IActionProviders>(
 ): T {
   let defaults: T = {} as any;
 
-  // allow extra providers
   for (let p in providers) {
     if (providers.hasOwnProperty(p))
       defaults[p] = new (providers as any)[p].constructor(store.dispatch);
