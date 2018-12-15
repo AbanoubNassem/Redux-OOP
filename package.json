@@ -1,22 +1,36 @@
 {
   "name": "redux-oop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A sample way to interact with Redux in your app.",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "webpack --mode=production",
-    "build": "npm run build:types && npm run build:js"
+    "build": "npm run build:types && npm run build:js",
+    "upload": "npm run build && npm publish"
   },
   "author": {
     "name": "Abanoub Nassem Mousa",
     "email": "abanoubnassemmousa@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbanoubNassem/Redux-OOP"
+  },
+  "bugs": {
+    "url": "https://github.com/AbanoubNassem/Redux-OOP/issues"
+  },
+  "homepage": "https://github.com/AbanoubNassem/Redux-OOP",
   "test": "jest",
-  "main": "dist/bundle.js",
-  "types": "dist/types/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
   "license": "MIT",
+  "dependencies": {
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
   "devDependencies": {
     "@babel/core": "7.2.0",
     "@babel/plugin-proposal-class-properties": "7.2.1",
@@ -24,12 +38,10 @@
     "@babel/preset-env": "7.2.0",
     "@babel/preset-typescript": "7.1.0",
     "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.15",
     "babel-loader": "8.0.4",
     "fork-ts-checker-webpack-plugin": "0.5.2",
     "jest": "^23.6.0",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
     "ts-jest": "^23.10.5",
     "typescript": "3.2.2",
     "webpack": "4.27.1",
