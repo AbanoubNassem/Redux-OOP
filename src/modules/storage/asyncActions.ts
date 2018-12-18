@@ -1,18 +1,32 @@
-import { IStorageActionProvider } from "./index";
+import { IAsyncStorageActionProvider } from "./index";
 import { ActionProvider } from "../../action-providers";
 import StorageActionTypes from "./actionTypes";
 import reducer from "./reducer";
 
-export default class StorageActions extends ActionProvider
-  implements IStorageActionProvider {
-  load = () => {
+let AsyncStorage: any;
+
+try {
+  if (process.env.NODE_ENV !== "test") {
+    AsyncStorage = require("react-native").AsyncStorage;
+  }
+} catch (err) {
+  AsyncStorage = {};
+}
+
+export default class AsyncStorageActions extends ActionProvider
+  implements IAsyncStorageActionProvider {
+  load = async () => {
     const storage: any = {};
 
-    for (let i = 0, len = localStorage.length; i < len; i++) {
-      let key: any = localStorage.key(i);
-      let value = localStorage[key];
+    const keys = await AsyncStorage.getAllKeys();
+    const stores = await AsyncStorage.multiGet(keys as any);
+
+    stores.map((_result: any, i: number, store: any) => {
+      const key = store[i][0];
+      const value = store[i][1];
       storage[key] = JSON.parse(value);
-    }
+      return storage[key];
+    });
 
     this.dispatch({
       type: StorageActionTypes.STORAGE_LOADED,
@@ -22,10 +36,10 @@ export default class StorageActions extends ActionProvider
     return storage;
   };
 
-  clear = () => {
+  clear = async () => {
     const storage: any = {};
 
-    localStorage.clear();
+    await AsyncStorage.clear();
 
     this.dispatch({
       type: StorageActionTypes.STORAGE_CLEARED,
@@ -39,7 +53,7 @@ export default class StorageActions extends ActionProvider
     for (let index = 0; index < Object.keys(object).length; index++) {
       const key = Object.keys(object)[index];
 
-      await localStorage.setItem(key, JSON.stringify(object[key]));
+      await AsyncStorage.setItem(key, JSON.stringify(object[key]));
     }
 
     return this.dispatch({
@@ -53,11 +67,11 @@ export default class StorageActions extends ActionProvider
 
     if (Array.isArray(keys)) {
       keys.forEach(async key => {
-        localStorage.removeItem(key);
+        await AsyncStorage.removeItem(key);
         deleted[key] = null;
       });
     } else {
-      localStorage.removeItem(keys);
+      await AsyncStorage.removeItem(keys);
       deleted[keys] = null;
     }
 

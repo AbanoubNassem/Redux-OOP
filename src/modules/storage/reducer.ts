@@ -1,4 +1,4 @@
-import { StorageActionTypes } from "./actions";
+import StorageActionTypes from "./actionTypes";
 
 export default (state = {}, action: any) => {
   switch (action.type) {

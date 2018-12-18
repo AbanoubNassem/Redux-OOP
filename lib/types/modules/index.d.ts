@@ -1,5 +1,5 @@
 import { IActionProviders } from "../action-providers";
-import { IStorageActionProvider } from "./storage";
+import { IAsyncStorageActionProvider, IStorageActionProvider } from "./storage";
 export default interface IModulesActionProviders extends IActionProviders {
-    Storage: IStorageActionProvider;
+  Storage?: IStorageActionProvider | IAsyncStorageActionProvider;
 }

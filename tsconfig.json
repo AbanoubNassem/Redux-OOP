@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
     "module": "commonjs",
     "lib": ["dom", "es2015", "es2016"],
     "declaration": true,
     "sourceMap": true,
-    "outDir": "./lib",
+    "outDir": "lib",
     "declarationDir": "lib/types",
     "removeComments": true,
     "strict": true,
@@ -19,7 +19,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false
+    "allowSyntheticDefaultImports": false,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "lib"]

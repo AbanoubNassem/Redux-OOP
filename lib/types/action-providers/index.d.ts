@@ -1,3 +1,2 @@
 export { default as ActionProvider } from "./action-provider";
-export interface IActionProviders {
-}
+export interface IActionProviders {}
