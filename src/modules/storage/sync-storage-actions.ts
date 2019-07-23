@@ -1,9 +1,10 @@
 import { IStorageActionProvider } from "./index";
-import { ActionProvider } from "../../action-providers";
-import StorageActionTypes from "./actionTypes";
+import StorageActionTypes from "./action-types";
+import ActionProvider from "../../action-providers";
+
 import reducer from "./reducer";
 
-export default class StorageActions extends ActionProvider
+export class SyncStorageActions extends ActionProvider
   implements IStorageActionProvider {
   load = () => {
     const storage: any = {};
@@ -35,11 +36,11 @@ export default class StorageActions extends ActionProvider
     return storage;
   };
 
-  saveOrUpdate = async (object: any) => {
+  saveOrUpdate = (object: any) => {
     for (let index = 0; index < Object.keys(object).length; index++) {
       const key = Object.keys(object)[index];
 
-      await localStorage.setItem(key, JSON.stringify(object[key]));
+      localStorage.setItem(key, JSON.stringify(object[key]));
     }
 
     return this.dispatch({
@@ -48,11 +49,11 @@ export default class StorageActions extends ActionProvider
     });
   };
 
-  remove = async (keys: string | Array<string> = []) => {
+  remove = (keys: string | Array<string> = []) => {
     let deleted: any = {};
 
     if (Array.isArray(keys)) {
-      keys.forEach(async key => {
+      keys.forEach(key => {
         localStorage.removeItem(key);
         deleted[key] = null;
       });

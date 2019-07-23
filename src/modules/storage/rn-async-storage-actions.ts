@@ -1,21 +1,14 @@
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { IAsyncStorageActionProvider } from "./index";
-import { ActionProvider } from "../../action-providers";
-import StorageActionTypes from "./actionTypes";
+import ActionProvider from "../../action-providers";
+import StorageActionTypes from "./action-types";
+
 import reducer from "./reducer";
 
-let AsyncStorage: any;
-
-try {
-  if (process.env.NODE_ENV !== "test") {
-    AsyncStorage = require("react-native").AsyncStorage;
-  }
-} catch (err) {
-  AsyncStorage = {};
-}
-
-export default class AsyncStorageActions extends ActionProvider
+export class RNAsyncStorageActions extends ActionProvider
   implements IAsyncStorageActionProvider {
-  load = async () => {
+  async load() {
     const storage: any = {};
 
     const keys = await AsyncStorage.getAllKeys();
@@ -34,9 +27,9 @@ export default class AsyncStorageActions extends ActionProvider
     });
 
     return storage;
-  };
+  }
 
-  clear = async () => {
+  async clear() {
     const storage: any = {};
 
     await AsyncStorage.clear();
@@ -47,11 +40,12 @@ export default class AsyncStorageActions extends ActionProvider
     });
 
     return storage;
-  };
+  }
 
-  saveOrUpdate = async (object: any) => {
-    for (let index = 0; index < Object.keys(object).length; index++) {
-      const key = Object.keys(object)[index];
+  async saveOrUpdate(object: any) {
+    const keys = Object.keys(object);
+    for (let index = 0; index < keys.length; index++) {
+      const key = keys[index];
 
       await AsyncStorage.setItem(key, JSON.stringify(object[key]));
     }
@@ -60,9 +54,9 @@ export default class AsyncStorageActions extends ActionProvider
       type: StorageActionTypes.STORAGE_UPDATED,
       payload: object
     });
-  };
+  }
 
-  remove = async (keys: string | Array<string> = []) => {
+  async remove(keys: string | Array<string> = []) {
     let deleted: any = {};
 
     if (Array.isArray(keys)) {
@@ -79,7 +73,7 @@ export default class AsyncStorageActions extends ActionProvider
       type: StorageActionTypes.STORAGE_REMOVED,
       payload: deleted
     });
-  };
+  }
 
   reducer = () => reducer;
 }

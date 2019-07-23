@@ -1,13 +1,11 @@
 {
   "name": "redux-oop",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A sample way to interact with Redux in your app.",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "npm run build:types && npm run build:js",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
+    "build": "rm -rf lib && tsc",
     "upload": "npm run build && npm publish"
   },
   "author": {
@@ -30,25 +28,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "redux": "^4.0.1",
+    "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "7.2.2",
-    "@babel/plugin-proposal-class-properties": "7.2.1",
-    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
-    "@babel/preset-env": "7.2.0",
-    "@babel/preset-typescript": "7.1.0",
-    "@types/jest": "^23.3.10",
-    "@types/node": "^10.12.15",
-    "@types/react-native": "^0.57.18",
-    "babel-loader": "8.0.4",
-    "fork-ts-checker-webpack-plugin": "0.5.2",
-    "jest": "^23.6.0",
-    "react-native": "^0.57.8",
-    "ts-jest": "^23.10.5",
-    "typescript": "3.2.2"
+    "@react-native-community/async-storage": "^1.5.1",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.8",
+    "@types/react-native": "^0.60.2",
+    "fork-ts-checker-webpack-plugin": "1.4.3",
+    "jest": "^24.8.0",
+    "react-native": "^0.60.4",
+    "ts-jest": "^24.0.2",
+    "typescript": "3.5.3"
   }
 }

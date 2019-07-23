@@ -5,11 +5,11 @@ import {
   combineReducers as reduxCombineReducers,
   Reducer
 } from "redux";
-import thunk from "redux-thunk";
 
-import { ActionProvider, IActionProviders } from "../action-providers";
+import thunk from "redux-thunk";
+import ActionProvider, { IActionProviders } from "../action-providers";
 import IModulesActionProviders from "../modules";
-import StorageActions from "../modules/storage/actions";
+import { SyncStorageActions } from "../modules/storage/sync-storage-actions";
 
 let middleware: any = [thunk];
 
@@ -81,7 +81,7 @@ export function initStoreWithModules(
 ) {
   return initStore<IModulesActionProviders>(
     {
-      Storage: new StorageActions(),
+      Storage: new SyncStorageActions(),
       ...providers
     },
     preloadState,

@@ -1,5 +1,14 @@
-export { initStore, initStoreWithModules } from "./store";
-export { ActionProvider } from "./action-providers/";
+import { initStore, initStoreWithModules } from "./store";
 
-export { default as StorageActions } from "./modules/storage/actions";
-export { default as AsyncStorageActions } from "./modules/storage/asyncActions";
+import ActionProvider from "./action-providers";
+
+import { SyncStorageActions } from "./modules/storage/sync-storage-actions";
+import { RNAsyncStorageActions } from "./modules/storage/rn-async-storage-actions";
+
+export default {
+  initStore,
+  initStoreWithModules,
+  ActionProvider,
+  SyncStorageActions,
+  RNAsyncStorageActions
+};

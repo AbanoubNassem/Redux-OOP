@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "es2015",
     "lib": ["dom", "es2015", "es2016"],
+    "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
     "outDir": "lib",
@@ -19,7 +20,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*"],

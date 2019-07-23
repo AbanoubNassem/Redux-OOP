@@ -1,3 +1,3 @@
 # Redux-OOP
 
-> A sample way to interact with Redux in your app.
+> A Simple Object Oriented way to interact with Redux in your app.

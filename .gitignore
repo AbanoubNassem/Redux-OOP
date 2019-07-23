@@ -9,3 +9,4 @@ yarn-error.log
 .DS_Store
 __tests__/dummy.ts
 coverage/
+*.log
