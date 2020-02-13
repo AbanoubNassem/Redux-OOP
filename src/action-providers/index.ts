@@ -1,10 +1,21 @@
 import { Reducer } from "redux";
 
-export default abstract class ActionProvider {
+export abstract class ActionProvider {
+  protected init() {}
   //@ts-ignore
-  protected dispatch(action: any) {}
+  protected getState(): any {}
+  //@ts-ignore
+  private dispatch(action: any) {}
 
-  public abstract reducer: () => Reducer;
+  //@ts-ignore
+  protected dispatchAction(type: string, payload: any = {}): any {
+    return this.dispatch({
+      type,
+      payload
+    });
+  }
+
+  protected abstract reducer: () => Reducer;
 }
 
 export interface IActionProviders {}

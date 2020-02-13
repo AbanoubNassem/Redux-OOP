@@ -1,12 +1,13 @@
 {
   "name": "redux-oop",
-  "version": "0.0.7",
+  "version": "0.1.1",
   "description": "A sample way to interact with Redux in your app.",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "rm -rf lib && tsc",
-    "upload": "npm run build && npm publish"
+    "prepare": "bob build",
+    "upload": "npm run prepare && npm publish"
   },
   "author": {
     "name": "Abanoub Nassem Mousa",
@@ -21,26 +22,43 @@
   },
   "homepage": "https://github.com/AbanoubNassem/Redux-OOP",
   "test": "jest",
-  "main": "lib/",
-  "types": "lib/types/index.d.ts",
+  "main": "lib/module/index.js",
+  "react-native": "lib/module/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
   "files": [
+    "src",
     "lib"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
   "dependencies": {
     "redux": "^4.0.4",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
-    "@react-native-community/async-storage": "^1.5.1",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.8",
-    "@types/react-native": "^0.60.2",
-    "fork-ts-checker-webpack-plugin": "1.4.3",
-    "jest": "^24.8.0",
+    "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/bob": "^0.7.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@types/react-native": "^0.60.8",
+    "fork-ts-checker-webpack-plugin": "1.5.0",
+    "jest": "^24.9.0",
+    "react": "^16.8.6",
     "react-native": "^0.60.4",
     "ts-jest": "^24.0.2",
     "typescript": "3.5.3"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "module",
+      "typescript"
+    ]
   }
 }

@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "es2015",
-    "lib": ["dom", "es2015", "es2016"],
-    "moduleResolution": "node",
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": "lib",
-    "declarationDir": "lib/types",
-    "removeComments": true,
+    "target": "es2017",
+    "lib": ["es6", "dom"],
+    "jsx": "react-native",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
+    "alwaysStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "types": ["react", "react-native"],
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "lib"]
+  "files": ["src/index.d.ts"],
+  "include": ["src/index.ts"]
 }

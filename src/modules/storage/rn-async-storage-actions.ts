@@ -1,10 +1,12 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
+import { ActionProvider } from "../../action-providers";
 import { IAsyncStorageActionProvider } from "./index";
-import ActionProvider from "../../action-providers";
 import StorageActionTypes from "./action-types";
 
 import reducer from "./reducer";
+
+const PREFIX = "REDUX_OOP_";
 
 export class RNAsyncStorageActions extends ActionProvider
   implements IAsyncStorageActionProvider {
@@ -16,15 +18,14 @@ export class RNAsyncStorageActions extends ActionProvider
 
     stores.map((_result: any, i: number, store: any) => {
       const key = store[i][0];
-      const value = store[i][1];
-      storage[key] = JSON.parse(value);
-      return storage[key];
+      if (key.startsWith(PREFIX)) {
+        const value = store[i][1];
+        storage[key.substring(PREFIX.length)] = JSON.parse(value);
+        storage[key];
+      }
     });
 
-    this.dispatch({
-      type: StorageActionTypes.STORAGE_LOADED,
-      payload: storage
-    });
+    this.dispatchAction(StorageActionTypes.STORAGE_LOADED, storage);
 
     return storage;
   }
@@ -34,10 +35,7 @@ export class RNAsyncStorageActions extends ActionProvider
 
     await AsyncStorage.clear();
 
-    this.dispatch({
-      type: StorageActionTypes.STORAGE_CLEARED,
-      payload: storage
-    });
+    this.dispatchAction(StorageActionTypes.STORAGE_CLEARED, storage);
 
     return storage;
   }
@@ -47,33 +45,28 @@ export class RNAsyncStorageActions extends ActionProvider
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
 
-      await AsyncStorage.setItem(key, JSON.stringify(object[key]));
+      await AsyncStorage.setItem(PREFIX + key, JSON.stringify(object[key]));
     }
 
-    return this.dispatch({
-      type: StorageActionTypes.STORAGE_UPDATED,
-      payload: object
-    });
+    return this.dispatchAction(StorageActionTypes.STORAGE_UPDATED, object);
   }
 
+  //to be fixed!
   async remove(keys: string | Array<string> = []) {
-    let deleted: any = {};
+    const deleted: any = {};
 
     if (Array.isArray(keys)) {
       keys.forEach(async key => {
-        await AsyncStorage.removeItem(key);
+        await AsyncStorage.removeItem(PREFIX + key);
         deleted[key] = null;
       });
     } else {
-      await AsyncStorage.removeItem(keys);
+      await AsyncStorage.removeItem(PREFIX + keys);
       deleted[keys] = null;
     }
 
-    return this.dispatch({
-      type: StorageActionTypes.STORAGE_REMOVED,
-      payload: deleted
-    });
+    return this.dispatchAction(StorageActionTypes.STORAGE_REMOVED, deleted);
   }
 
-  reducer = () => reducer;
+  protected reducer = () => reducer;
 }

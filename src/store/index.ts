@@ -7,7 +7,7 @@ import {
 } from "redux";
 
 import thunk from "redux-thunk";
-import ActionProvider, { IActionProviders } from "../action-providers";
+import { ActionProvider, IActionProviders } from "../action-providers";
 import IModulesActionProviders from "../modules";
 import { SyncStorageActions } from "../modules/storage/sync-storage-actions";
 
@@ -20,7 +20,7 @@ function combineReducers<T extends IActionProviders>(providers: T): Reducer {
     if (providers.hasOwnProperty(p)) {
       const provider = (providers as any)[p] as ActionProvider;
       const reducerName = p.toLowerCase();
-      reducers[reducerName] = provider.reducer();
+      reducers[reducerName] = (provider as any).reducer();
     }
   }
 
@@ -38,7 +38,9 @@ function initActionProviders<T extends IActionProviders>(
   for (let p in providers) {
     if (providers.hasOwnProperty(p)) {
       defaults[p] = (providers as any)[p];
+      defaults[p].getState = () => store.getState();
       defaults[p].dispatch = store.dispatch;
+      defaults[p].init();
     }
   }
 

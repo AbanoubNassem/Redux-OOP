@@ -1,8 +1,10 @@
 import { IStorageActionProvider } from "./index";
 import StorageActionTypes from "./action-types";
-import ActionProvider from "../../action-providers";
+import { ActionProvider } from "../../action-providers";
 
 import reducer from "./reducer";
+
+const PREFIX = "REDUX_OOP_";
 
 export class SyncStorageActions extends ActionProvider
   implements IStorageActionProvider {
@@ -11,14 +13,13 @@ export class SyncStorageActions extends ActionProvider
 
     for (let i = 0, len = localStorage.length; i < len; i++) {
       let key: any = localStorage.key(i);
-      let value = localStorage[key];
-      storage[key] = JSON.parse(value);
+      if (key.startsWith(PREFIX)) {
+        let value = localStorage[key];
+        storage[key] = JSON.parse(value);
+      }
     }
 
-    this.dispatch({
-      type: StorageActionTypes.STORAGE_LOADED,
-      payload: storage
-    });
+    this.dispatchAction(StorageActionTypes.STORAGE_LOADED, storage);
 
     return storage;
   };
@@ -27,11 +28,7 @@ export class SyncStorageActions extends ActionProvider
     const storage: any = {};
 
     localStorage.clear();
-
-    this.dispatch({
-      type: StorageActionTypes.STORAGE_CLEARED,
-      payload: storage
-    });
+    this.dispatchAction(StorageActionTypes.STORAGE_CLEARED, storage);
 
     return storage;
   };
@@ -40,13 +37,10 @@ export class SyncStorageActions extends ActionProvider
     for (let index = 0; index < Object.keys(object).length; index++) {
       const key = Object.keys(object)[index];
 
-      localStorage.setItem(key, JSON.stringify(object[key]));
+      localStorage.setItem(PREFIX + key, JSON.stringify(object[key]));
     }
 
-    return this.dispatch({
-      type: StorageActionTypes.STORAGE_UPDATED,
-      payload: object
-    });
+    return this.dispatchAction(StorageActionTypes.STORAGE_UPDATED, object);
   };
 
   remove = (keys: string | Array<string> = []) => {
@@ -54,19 +48,16 @@ export class SyncStorageActions extends ActionProvider
 
     if (Array.isArray(keys)) {
       keys.forEach(key => {
-        localStorage.removeItem(key);
+        localStorage.removeItem(PREFIX + key);
         deleted[key] = null;
       });
     } else {
-      localStorage.removeItem(keys);
+      localStorage.removeItem(PREFIX + keys);
       deleted[keys] = null;
     }
 
-    return this.dispatch({
-      type: StorageActionTypes.STORAGE_REMOVED,
-      payload: deleted
-    });
+    return this.dispatchAction(StorageActionTypes.STORAGE_REMOVED, deleted);
   };
 
-  reducer = () => reducer;
+  protected reducer = () => reducer;
 }
